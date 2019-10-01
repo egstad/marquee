@@ -1,6 +1,6 @@
 {
   "name": "@egstad/marquee",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A lightweight Javascript Marquee that uses RequestAnimationFrame and CSS Transforms",
   "license": "MIT",
   "repository": "egstad/marquee",
@@ -8,5 +8,17 @@
   "keywords": [
     "javascript",
     "marquee"
-  ]
+  ],
+  "scripts": {
+    "build": "./node_modules/.bin/babel ./src --out-dir ./ --presets minify"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "babel-preset-minify": "^0.5.1"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.6.0"
+  }
 }
