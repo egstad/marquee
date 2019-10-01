@@ -1,7 +1,13 @@
 export default class Marquee {
   constructor(el) {
     // marquee el
-    this.el = document.querySelector(el);
+    if (typeof el === "object") {
+      this.el = el;
+    } else if (typeof el === "string") {
+      this.el = document.querySelector(el);  
+    } else {
+      throw new TypeError("Marquee accepts either a HTML Element (object) or a class/id to query (string).");
+    }
     // marquee inner wrap (first child)
     this.elWrap = this.el.children[0];
     // raf instance, cached for cancel
