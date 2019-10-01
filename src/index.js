@@ -12,9 +12,8 @@ export default class Marquee {
     this.elWrap = this.el.children[0];
     // raf instance, cached for cancel
     this.RAF = null;
-    this.winWidth = window.innerWidth;
     // transformX offset
-    this.offset = 0;
+    this.offset = this.el.offsetWidth;
     this.speed = this.el.dataset.speed || 1;
     this.observerOptions = {
       rootMargin: '0px 0px',
@@ -49,7 +48,7 @@ export default class Marquee {
     cancelAnimationFrame(this.RAF);
   }
   reset() {
-    this.offset = window.innerWidth;
+    this.offset = this.el.offsetWidth;
     this.elWrap.style.transform = `translate3d(${this.offset}px, 0, 0)`;
   }
   observerInit() {
@@ -64,9 +63,7 @@ export default class Marquee {
       });
     }, this.observerOptions);
   }
-  destroy() {
-    window.removeEventListener("resize", this.resizeHandler);
-  }
+  destroy() {}
 }
 
 
