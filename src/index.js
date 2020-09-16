@@ -14,18 +14,11 @@ export default class Marquee {
     this.RAF = null;
     this.offset = this.el.offsetWidth;
     this.speed = this.el.dataset.speed || 1;
-    this.observerOptions = {
-      rootMargin: '0px 0px',
-      threshold: 0,
-    };
-    this.observer = null;
     
     this.styleElements();
     this.init();
   }
   init() {
-    this.observerInit();
-    this.observer.observe(this.sign);
     this.draw();
   }
   styleElements() {
@@ -36,6 +29,12 @@ export default class Marquee {
     const performAnimation = () => {
       // loop it!
       this.RAF = requestAnimationFrame(performAnimation);
+
+      // if the item is fully hidden, start animation over
+      if (-this.offset >= this.sign.clientWidth) {
+        this.reset()
+      }
+      
       // update offset
       this.offset = this.offset - this.speed;
       this.sign.style.transform = `translate3d(${this.offset}px, 0, 0)`;
@@ -50,18 +49,8 @@ export default class Marquee {
     this.offset = this.el.offsetWidth;
     this.sign.style.transform = `translate3d(${this.offset}px, 0, 0)`;
   }
-  observerInit() {
-    this.observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.intersectionRatio === 0) {
-          this.reset()
-        }
-      });
-    }, this.observerOptions);
-  }
   destroy() {
     this.stop()
-    this.observer.unobserve(this.sign);
   }
 }
 
