@@ -14,16 +14,28 @@ export default class Marquee {
     this.RAF = null;
     this.offset = this.el.offsetWidth;
     this.speed = this.el.dataset.speed || 1;
+    // let's bind the window resize event for easy setup/teardown
+    this.onResize = this.getSignWidth.bind(this)
     
     this.styleElements();
     this.init();
   }
   init() {
+    // measure the sign's width
+    this.getSignWidth();
+    // begin animation
     this.draw();
+    // in case the contents change size on resize,
+    // fetch & update the size for animation
+    window.addEventListener("resize", this.onResize)
   }
   styleElements() {
     this.el.style.display = "flex";
     this.sign.style.display = "inline-flex";
+  }
+  getSignWidth() {
+    this.signWidth = this.sign.clientWidth
+    console.log(this.signWidth)
   }
   draw() {
     const performAnimation = () => {
@@ -31,7 +43,7 @@ export default class Marquee {
       this.RAF = requestAnimationFrame(performAnimation);
 
       // if the item is fully hidden, start animation over
-      if (-this.offset >= this.sign.clientWidth) {
+      if (-this.offset >= this.signWidth) {
         this.reset()
       }
       
@@ -51,6 +63,7 @@ export default class Marquee {
   }
   destroy() {
     this.stop()
+    window.removeEventListener("resize", this.onResize)
   }
 }
 
