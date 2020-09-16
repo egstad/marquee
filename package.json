@@ -1,6 +1,6 @@
 {
   "name": "@egstad/marquee",
-  "version": "2.6.2",
+  "version": "3.0.0",
   "description": "A lightweight Javascript Marquee that uses RequestAnimationFrame and CSS Transforms",
   "license": "MIT",
   "repository": "egstad/marquee",
