@@ -35,7 +35,6 @@ export default class Marquee {
   }
   getSignWidth() {
     this.signWidth = this.sign.clientWidth
-    console.log(this.signWidth)
   }
   draw() {
     const performAnimation = () => {
